@@ -20,6 +20,9 @@
 @synthesize cookie;
 @synthesize basicAuthentication;
 @synthesize timeout;
+@synthesize ssl;
+@synthesize port;
+@synthesize acceptedLanguages;
 
 #pragma mark -
 #pragma mark Constructors
@@ -43,10 +46,19 @@
 		ssl=_ssl; 
 		delegate=nil;
 		timeout=DEFAULT_TIMEOUT_INTERVAL;
+		acceptedLanguages = nil;
+		cookie= nil;
 	}
 	return self;
 }
 
+- (void) dealloc {
+	[delegate release];
+	[cookie release];
+	[server release];
+	[acceptedLanguages release];
+	[super dealloc];
+}
 #pragma mark -
 #pragma mark Instance methods
 
@@ -66,6 +78,7 @@
 						   @"text/xml",
 						   @"text/html",
 						   @"multipart/form-data",
+						   @"image",
 						   nil];
 		[contenTypeNames retain];
 	}
@@ -174,7 +187,7 @@ char* c_urlencode(const char* str) {
 	NSLog(@"headers: %@",headers);
 #endif
 	
-	if (err != nil && (err.code!=0 || response.statusCode==403)) {
+	if (err != nil && (err.code!=0 || response.statusCode==403 || response.statusCode == 400)) {
 		if (delegate != nil && [delegate conformsToProtocol:@protocol(CPSReSTClientDelegate)]) {
 			content=[self decodeXML:doc];
 			[delegate performSelectorOnMainThread:@selector(connectionError: ) withObject:content waitUntilDone:YES];
@@ -190,7 +203,7 @@ char* c_urlencode(const char* str) {
 			NSLog(@"Error code: %i, HTTP status: %i, additional info: %@, %@", err.code, response.statusCode, [content objectForKey:@"name"],[content objectForKey:@"message"]);
 		}
 #endif
-		return result;
+		return [result autorelease];
 	}
 	if ((cookieStringForm = [headers objectForKey:@"Set-Cookie"]) != nil) {
 		// If a cookie was set by the server
@@ -217,7 +230,7 @@ char* c_urlencode(const char* str) {
 		SBJsonParser *jsonParser = [SBJsonParser new];
 		id jsonContent = [jsonParser objectWithString:doc];
 		if (!jsonContent){
-			NSLog(@"-JSONValue failed. Error trace is: %@", [jsonParser errorTrace]);
+			NSLog(@"-JSONValue failed. Error trace is: %@", [jsonParser error]);
 		}
 		[jsonParser release];
 		
@@ -232,7 +245,7 @@ char* c_urlencode(const char* str) {
 	} /*else {
 		result=[NSMutableDictionary dictionaryWithObject:doc forKey:DEF_RETURN];
 	}*/
-	return result;
+	return [result autorelease];
 }
 
 - (NSURLRequest*)prepareRequest:(CPSReSTMethod)method
@@ -260,6 +273,20 @@ char* c_urlencode(const char* str) {
 	// Default values
 	[req setTimeoutInterval:self.timeout];
 	[req setValue:@"close" forHTTPHeaderField:@"Connection"];
+	// Locales
+	// ie, Accept-Language: fr,fr-fr;q=0.8,en-us;q=0.5,en;q=0.3
+	/*
+	if (acceptedLanguages != nil) {
+		NSMutableString * stringsLocales = [[NSMutableString alloc] init];
+		BOOL firstLocale = YES;
+		for(NSString * strLocale in self.acceptedLanguages) {
+			[stringsLocales appendFormat:firstLocale ? @"%@": @",%@", strLocale];
+			firstLocale = NO;
+		}
+		[req setValue:stringsLocales forHTTPHeaderField:@"Accept-Language"];
+		[stringsLocales release];
+	}
+	*/
 	
 	// POST content
 	if (post && [post count]>0) {
@@ -285,6 +312,8 @@ char* c_urlencode(const char* str) {
 	// If we have a cooke set, add it to all requests
 	if (cookie != nil) {
 		[req setValue:[NSString stringWithFormat:@"%@=%@",cookie.name,cookie.value] forHTTPHeaderField:@"cookie"];
+	} else {
+		[req setValue:@"" forHTTPHeaderField:@"cookie"];
 	}
 	
 	return req;
@@ -296,6 +325,13 @@ char* c_urlencode(const char* str) {
 #define XML_IDENT  @"\t"
 
 @implementation CPSReSTClient (CoDec)
++ (NSString*) stringUrlEncode:(NSString*) unencodedString {
+	char * encoded = c_urlencode([unencodedString cStringUsingEncoding:NSUTF8StringEncoding]);
+	NSString* encodedString = [NSString stringWithCString:encoded encoding:NSUTF8StringEncoding];
+	free(encoded);
+	return encodedString;
+}
+
 - (NSString*) urlencode:(NSDictionary*)data {
 	NSMutableString* r=[[[NSMutableString alloc] init] autorelease];
 	NSArray* ka=[data allKeys];

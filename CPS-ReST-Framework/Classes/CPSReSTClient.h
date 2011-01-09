@@ -37,7 +37,8 @@ typedef enum {
 	CPSReSTContentTypeTextPlain,
 	CPSReSTContentTypeTextXML,
 	CPSReSTContentTypeTextHTML,
-	CPSReSTContentTypeMultipartFormData
+	CPSReSTContentTypeMultipartFormData,
+	CPSReSTContentTypeImage
 } CPSReSTContentType;
 
 @protocol CPSReSTClientDelegate
@@ -66,7 +67,10 @@ typedef enum {
 @property (retain,readwrite) NSObject<CPSReSTClientDelegate>* delegate;
 @property (retain,readwrite) CPSReSTCookie* cookie;
 @property (retain,readwrite) CPSReSTBasicAuthentication* basicAuthentication;
+@property (readwrite) BOOL ssl;
+@property (readwrite) NSInteger port;
 @property (readwrite) NSTimeInterval timeout;
+@property (retain,readwrite) NSArray * acceptedLanguages;
 
 // constructors, default: port=8280 ssl=NO
 + (id) clientWithServer:(NSString*)server;
@@ -103,6 +107,7 @@ typedef enum {
 @end
 
 @interface CPSReSTClient (CoDec)
++ (NSString*) stringUrlEncode:(NSString*) unencodedString;
 - (NSString*)urlencode:(NSDictionary*)data;
 - (NSString*)encodeXML:(NSDictionary*)data;
 - (NSMutableDictionary*)decodeXML:(NSString*)xml;

@@ -20,6 +20,7 @@ static NSString *const CPS_REST_CONTENT_TYPE_TEXT_PLAIN = @"text/plain";
 static NSString *const CPS_REST_CONTENT_TYPE_TEXT_XML = @"text/xml";
 static NSString *const CPS_REST_CONTENT_TYPE_TEXT_HTML = @"text/html";
 static NSString *const CPS_REST_CONTENT_TYPE_MP_FORM_DATA = @"multipart/form-data";
+static NSString *const CPS_REST_CONTENT_TYPE_IMAGE = @"image";
 
 @implementation TestCPSReSTClient
 
@@ -76,6 +77,9 @@ static NSString *const CPS_REST_CONTENT_TYPE_MP_FORM_DATA = @"multipart/form-dat
 	
 	STAssertTrue([[CPSReSTClient contentTypeForKey:CPSReSTContentTypeMultipartFormData] isEqualToString:CPS_REST_CONTENT_TYPE_MP_FORM_DATA],
 				 @"Wrong content-type ('%@' != '%@')", [CPSReSTClient contentTypeForKey:CPSReSTContentTypeMultipartFormData], CPS_REST_CONTENT_TYPE_MP_FORM_DATA);
+
+	STAssertTrue([[CPSReSTClient contentTypeForKey:CPSReSTContentTypeImage] isEqualToString:CPS_REST_CONTENT_TYPE_IMAGE],
+				 @"Wrong content-type ('%@' != '%@')", [CPSReSTClient contentTypeForKey:CPSReSTContentTypeImage], CPS_REST_CONTENT_TYPE_IMAGE);
 
 }
 
