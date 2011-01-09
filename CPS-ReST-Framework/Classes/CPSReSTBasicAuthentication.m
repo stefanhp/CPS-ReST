@@ -61,6 +61,6 @@ static char base64EncodingTable[64] = {
 			}
 		}
 	}
-	return encodedString;
+	return [encodedString autorelease];
 }
 @end
