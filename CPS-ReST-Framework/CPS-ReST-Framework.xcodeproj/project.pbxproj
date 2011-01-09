@@ -97,7 +97,7 @@
 		F81E5BF511809C85009F5BD0 /* TestCPSReSTClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestCPSReSTClient.m; sourceTree = "<group>"; };
 		F85499DB119DA3100010B513 /* CPSReSTXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPSReSTXMLParser.h; path = Classes/CPSReSTXMLParser.h; sourceTree = "<group>"; };
 		F85499DC119DA3100010B513 /* CPSReSTXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPSReSTXMLParser.m; path = Classes/CPSReSTXMLParser.m; sourceTree = "<group>"; };
-		F8785B4811A13A52000E6763 /* CPSReST */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.framework; path = CPSReST; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8785B4811A13A52000E6763 /* CPSReST.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CPSReST.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F87AA34C11774F6A00E57B61 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		F87AA34D11774F6A00E57B61 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
 		F87AA34E11774F6A00E57B61 /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
@@ -158,7 +158,7 @@
 				F8DC276A117752A900E2AA4A /* libCPSReST.a */,
 				F8A6A75F11775AC600DCC9A5 /* Test-CPSRest-Framework.octest */,
 				F81E5BA2118094A1009F5BD0 /* Test-CPSReST-Library.octest */,
-				F8785B4811A13A52000E6763 /* CPSReST */,
+				F8785B4811A13A52000E6763 /* CPSReST.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -328,7 +328,7 @@
 			name = "CPS-ReST-Framework";
 			productInstallPath = "$(HOME)/Library/Frameworks";
 			productName = "CPS-ReST-Framework";
-			productReference = F8785B4811A13A52000E6763 /* CPSReST */;
+			productReference = F8785B4811A13A52000E6763 /* CPSReST.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		F81E5BA1118094A1009F5BD0 /* Test-CPSReST-Library */ = {
@@ -396,7 +396,14 @@
 			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "CPS-ReST-Framework" */;
 			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
 			mainGroup = 0867D691FE84028FC02AAC07 /* CPS-ReST-Framework */;
 			productRefGroup = 034768DFFF38A50411DB9C8B /* Products */;
 			projectDirPath = "";
@@ -551,6 +558,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Frameworks";
 				PRODUCT_NAME = CPSReST;
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
@@ -569,6 +577,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Frameworks";
 				PRODUCT_NAME = CPSReST;
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
@@ -605,7 +614,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -627,7 +636,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "Test-CPSReST-Library";
-				SDKROOT = iphoneos3.1.3;
+				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
@@ -636,7 +645,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -657,7 +666,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "Test-CPSReST-Library";
-				SDKROOT = iphoneos3.1.3;
+				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = octest;
 				ZERO_LINK = NO;
 			};
@@ -721,13 +730,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				PREBINDING = NO;
 				PRODUCT_NAME = CPSReST;
-				SDKROOT = iphoneos3.1.3;
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -735,13 +744,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				PREBINDING = NO;
 				PRODUCT_NAME = CPSReST;
-				SDKROOT = iphoneos3.1.3;
+				SDKROOT = iphoneos;
 				ZERO_LINK = NO;
 			};
 			name = Release;
