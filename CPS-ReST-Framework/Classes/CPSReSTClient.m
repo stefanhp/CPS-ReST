@@ -203,6 +203,7 @@ char* c_urlencode(const char* str) {
 			NSLog(@"Error code: %i, HTTP status: %i, additional info: %@, %@", err.code, response.statusCode, [content objectForKey:@"name"],[content objectForKey:@"message"]);
 		}
 #endif
+		[doc release];
 		return [result autorelease];
 	}
 	if ((cookieStringForm = [headers objectForKey:@"Set-Cookie"]) != nil) {
@@ -245,6 +246,7 @@ char* c_urlencode(const char* str) {
 	} /*else {
 		result=[NSMutableDictionary dictionaryWithObject:doc forKey:DEF_RETURN];
 	}*/
+	[doc release];
 	return [result autorelease];
 }
 
