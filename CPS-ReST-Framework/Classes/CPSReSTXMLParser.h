@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface CPSReSTXMLParser : NSObject {
+@interface CPSReSTXMLParser : NSObject<NSXMLParserDelegate> {
 	NSMutableArray* stack; // stack of XML parser
 	NSXMLParser *parser;
 }

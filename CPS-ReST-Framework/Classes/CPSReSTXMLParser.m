@@ -32,7 +32,7 @@
 }
 
 #pragma mark -
-#pragma mark NSXMLParser Delegate methods
+#pragma mark NSXMLParserDelegate methods
 
 - (void)parser:(NSXMLParser*)p didStartElement:(NSString *)name namespaceURI:(NSString *)ns qualifiedName:(NSString *)qn attributes:(NSDictionary *)attr {
 	NSMutableDictionary *d=[[[NSMutableDictionary alloc] init] autorelease];
