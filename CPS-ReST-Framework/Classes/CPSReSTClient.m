@@ -166,11 +166,6 @@ char* c_urlencode(const char* str) {
 	NSHTTPURLResponse * response;
 	NSError *err = nil;
 	NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
-	NSString *doc = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];	
-	NSDictionary* headers = [response allHeaderFields];
-	NSMutableDictionary* result=[[NSMutableDictionary alloc] init];	
-	NSMutableDictionary* content=nil;	
-	NSString *cookieStringForm;
     
     if (err != nil) {
         #ifdef REST_DEBUG
@@ -182,6 +177,12 @@ char* c_urlencode(const char* str) {
 		}
 		return nil;
 	}
+    
+    NSDictionary* headers = [response allHeaderFields];
+    NSString *doc = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];	
+	NSMutableDictionary* result=[[NSMutableDictionary alloc] init];	
+	NSMutableDictionary* content=nil;	
+	NSString *cookieStringForm;
 	
 	if(response != nil){
 		[result setObject:[NSNumber numberWithInteger:[response statusCode]] forKey:@"statusCode"];
