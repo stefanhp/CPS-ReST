@@ -43,7 +43,7 @@ typedef enum {
 
 @protocol CPSReSTClientDelegate
 @required
-- (void)connectionError:(NSMutableDictionary *)error;
+- (void)connectionError:(NSError *)error;
 - (void)asyncResponse:(NSDictionary*)result;
 @end
 

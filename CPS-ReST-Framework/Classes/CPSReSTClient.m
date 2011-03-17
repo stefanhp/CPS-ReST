@@ -130,7 +130,7 @@
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	NSDictionary *res=[self execRequest:request];
 	
-	if(delegate != nil && [delegate respondsToSelector:@selector(asyncResponse:)]){
+	if (res != nil && delegate != nil && [delegate respondsToSelector:@selector(asyncResponse:)]) {
 		[delegate asyncResponse:res];
 	}
 
@@ -159,9 +159,10 @@ char* c_urlencode(const char* str) {
 }
 
 - (NSMutableDictionary*)execRequest:(NSURLRequest*)request {
-#ifdef REST_DEBUG
-	NSLog(@"%s %@", __FUNCTION__, request);
-#endif
+    #ifdef REST_DEBUG
+        NSLog(@"%s %@", __FUNCTION__, request);
+    #endif
+    
 	NSHTTPURLResponse * response;
 	NSError *err = nil;
 	NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
@@ -170,42 +171,31 @@ char* c_urlencode(const char* str) {
 	NSMutableDictionary* result=[[NSMutableDictionary alloc] init];	
 	NSMutableDictionary* content=nil;	
 	NSString *cookieStringForm;
+    
+    if (err != nil) {
+        #ifdef REST_DEBUG
+            NSLog(@"Connection error '%i': %@", [err code], [err localizedDescription]);
+        #endif
+        
+		if (delegate != nil && [delegate conformsToProtocol:@protocol(CPSReSTClientDelegate)]) {
+			[delegate performSelectorOnMainThread:@selector(connectionError: ) withObject:err waitUntilDone:YES];
+		}
+		return nil;
+	}
 	
 	if(response != nil){
 		[result setObject:[NSNumber numberWithInteger:[response statusCode]] forKey:@"statusCode"];
 		[result setObject:[response allHeaderFields] forKey:@"headers"];
 	}
-#ifdef REST_DEBUG
-	if(response != nil){
-		//NSLog(@"response: %@",response);
-		//NSLog(@"response: %i",[response statusCode]);
-		NSLog(@"response: %i:%@",[response statusCode], [NSHTTPURLResponse localizedStringForStatusCode:[response statusCode]]);
-	}
-	NSLog(@"err: %@",err);
-	NSLog(@"data: %@",data);
-	NSLog(@"doc: %@",doc);
-	NSLog(@"headers: %@",headers);
-#endif
-	
-	if (err != nil && (err.code!=0 || response.statusCode==403 || response.statusCode == 400)) {
-		if (delegate != nil && [delegate conformsToProtocol:@protocol(CPSReSTClientDelegate)]) {
-			content=[self decodeXML:doc];
-			[delegate performSelectorOnMainThread:@selector(connectionError: ) withObject:content waitUntilDone:YES];
-		}
-#ifdef REST_DEBUG
-		if (err.code!=0){
-			[result setObject:err.localizedDescription forKey:@"error"];
-			NSLog(@"Error: %@",err.localizedDescription);
-		}
-		else {
-			content=[self decodeXML:doc];
-			[result setObject:content forKey:@"error"];
-			NSLog(@"Error code: %i, HTTP status: %i, additional info: %@, %@", err.code, response.statusCode, [content objectForKey:@"name"],[content objectForKey:@"message"]);
-		}
-#endif
-		[doc release];
-		return [result autorelease];
-	}
+    
+    #ifdef REST_DEBUG
+        if(response != nil){
+            NSLog(@"Response '%i': %@", [response statusCode], [NSHTTPURLResponse localizedStringForStatusCode:[response statusCode]]);
+        }
+        NSLog(@"Headers: %@",headers);
+        NSLog(@"Document: %@",doc);
+    #endif
+    
 	if ((cookieStringForm = [headers objectForKey:@"Set-Cookie"]) != nil) {
 		// If a cookie was set by the server
 		/*
