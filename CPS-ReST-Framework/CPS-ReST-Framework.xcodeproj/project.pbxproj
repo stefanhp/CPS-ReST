@@ -126,7 +126,7 @@
 		F84435B912D9D5E400042C51 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
 		F85499DB119DA3100010B513 /* CPSReSTXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPSReSTXMLParser.h; path = Classes/CPSReSTXMLParser.h; sourceTree = "<group>"; };
 		F85499DC119DA3100010B513 /* CPSReSTXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPSReSTXMLParser.m; path = Classes/CPSReSTXMLParser.m; sourceTree = "<group>"; };
-		F8785B4811A13A52000E6763 /* CPSReST */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.framework; path = CPSReST; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8785B4811A13A52000E6763 /* CPSReST.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CPSReST.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8A6A75F11775AC600DCC9A5 /* Test-CPSRest-Framework.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Test-CPSRest-Framework.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8A6A76011775AC600DCC9A5 /* Test-CPSRest-Framework-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Test-CPSRest-Framework-Info.plist"; sourceTree = SOURCE_ROOT; };
 		F8DC276A117752A900E2AA4A /* libCPSReST.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCPSReST.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -174,7 +174,7 @@
 				F8DC276A117752A900E2AA4A /* libCPSReST.a */,
 				F8A6A75F11775AC600DCC9A5 /* Test-CPSRest-Framework.octest */,
 				F81E5BA2118094A1009F5BD0 /* Test-CPSReST-Library.octest */,
-				F8785B4811A13A52000E6763 /* CPSReST */,
+				F8785B4811A13A52000E6763 /* CPSReST.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -365,7 +365,7 @@
 			name = "CPS-ReST-Framework";
 			productInstallPath = "$(HOME)/Library/Frameworks";
 			productName = "CPS-ReST-Framework";
-			productReference = F8785B4811A13A52000E6763 /* CPSReST */;
+			productReference = F8785B4811A13A52000E6763 /* CPSReST.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		F81E5BA1118094A1009F5BD0 /* Test-CPSReST-Library */ = {
@@ -385,7 +385,7 @@
 			name = "Test-CPSReST-Library";
 			productName = "Test-CPSReST-Library";
 			productReference = F81E5BA2118094A1009F5BD0 /* Test-CPSReST-Library.octest */;
-			productType = "com.apple.product-type.bundle";
+			productType = "com.apple.product-type.bundle.ocunit-test";
 		};
 		F8A6A75E11775AC600DCC9A5 /* Test-CPSRest-Framework */ = {
 			isa = PBXNativeTarget;
@@ -404,7 +404,7 @@
 			name = "Test-CPSRest-Framework";
 			productName = "Test-CPSRest-Framework";
 			productReference = F8A6A75F11775AC600DCC9A5 /* Test-CPSRest-Framework.octest */;
-			productType = "com.apple.product-type.bundle";
+			productType = "com.apple.product-type.bundle.ocunit-test";
 		};
 		F8DC2769117752A900E2AA4A /* CPS-ReST-Library */ = {
 			isa = PBXNativeTarget;
@@ -429,6 +429,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "Pistache-Soft";
 			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "CPS-ReST-Framework" */;
@@ -586,6 +587,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -608,6 +610,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -626,7 +629,6 @@
 		1DEB91B208733DA50010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -634,20 +636,19 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				PRODUCT_NAME = CPSReST;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
 		1DEB91B308733DA50010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
 				PRODUCT_NAME = CPSReST;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -655,7 +656,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -686,7 +686,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -717,6 +716,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -744,6 +744,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
@@ -771,7 +772,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -785,7 +785,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
