@@ -637,6 +637,7 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = CPSReST;
 				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -649,6 +650,7 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = CPSReST;
 				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
